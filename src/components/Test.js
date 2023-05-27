@@ -28,6 +28,8 @@ export default function Test() {
 
   const list = useSelector((state) => state.allLists.lists);
   console.log(list);
+  const fil=useSelector((state)=>state.allLists.filterlist)
+  console.log(fil);
   let page = useSelector((state) => state.allLists.page);
   page = parseInt(page) - 1;
   page = String(page);
@@ -65,9 +67,18 @@ export default function Test() {
 
   const rows = [];
   if (list != "") {
-    for (let i = 0; i < list.results.length; i++) {
-      rows.push(createData(list.results[i].id, list.results[i].name, list.results[i].status, list.results[i].gender))
+    if(fil!="")
+    {
+      for (let i = 0; i < fil.length; i++) {
+        rows.push(createData(fil[i].id, fil[i].name, fil[i].status, fil[i].gender))
+      }
     }
+    else{
+      for (let i = 0; i < list.results.length; i++) {
+        rows.push(createData(list.results[i].id, list.results[i].name, list.results[i].status, list.results[i].gender))
+      }
+    }
+    
     //console.log(rows);
 
   }
