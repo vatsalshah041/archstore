@@ -1,3 +1,4 @@
 export const ActionTypes={
-    ADD:"ADD"
+    ADD:"ADD",
+    FILTER:"FILTER",
 }

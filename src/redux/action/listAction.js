@@ -5,3 +5,9 @@ export const add=(list)=>{
         payload:list,
     }
 };
+export const filter=(list)=>{
+    return{
+        type:ActionTypes.FILTER,
+        payload:list,
+    }
+};
