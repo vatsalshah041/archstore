@@ -28,6 +28,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 
 export default function Test() {
   const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow1, setModalShow1] = React.useState(false);
 
   const list = useSelector((state) => state.allLists.lists);
   console.log(list);
@@ -164,6 +165,62 @@ export default function Test() {
       </Modal>
     );
   }
+  function MyVerticallyCenteredModal1(props) {
+    
+
+    let x=localStorage.getItem("id")
+    x=String(parseInt(x)-1)
+    let y=parseInt(x)+1
+    let u="https://rickandmortyapi.com/api/character/avatar/"+y+".jpeg"
+    
+    console.log(x);
+    return (
+      <>
+      {(list && list.results && list.results[x])?<>
+        <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Details
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Grid container>
+            <Grid item md={3}></Grid>
+            <Grid item md={6}>
+            <img src={u} alt="Girl in a jacket" style={{width:"80%"}}/>
+            </Grid>
+            <Grid item md={3}></Grid>
+            <hr></hr>
+            <br></br>
+            <Grid item md={6}>
+              Name:{list.results[x].name}
+            </Grid>
+            <Grid item md={6}>
+              Created:{list.results[x].created}
+            </Grid>
+            <Grid item md={6}>
+              Gender:{list.results[x].gender}
+            </Grid>
+            <Grid item md={6}>
+              Origin:{list.results[x].origin.name}
+            </Grid>
+          </Grid>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='contained' onClick={props.onHide}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+        
+        </>:<></>}
+      
+      </>
+    );
+  }
   const next=()=>{
     page = parseInt(page) +1;
   page = String(page);
@@ -181,6 +238,11 @@ export default function Test() {
   console.log(page)
   setP(page)
    }
+  }
+  const details=(e)=>{
+    console.log(e);
+    localStorage.setItem("id",e);
+    setModalShow1(true)
   }
 
   return (
@@ -231,7 +293,7 @@ export default function Test() {
                         <TableCell align="center">{row.name}</TableCell>
                         <TableCell align="center">{row.status}</TableCell>
                         <TableCell align="center">{row.gender}</TableCell>
-                        <TableCell align="center"><IconButton onClick={details}><AssignmentIcon/></IconButton></TableCell>
+                        <TableCell align="center"><IconButton onClick={()=>{details(row.id)}}><AssignmentIcon/></IconButton></TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -242,6 +304,10 @@ export default function Test() {
               <MyVerticallyCenteredModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
+              />
+              <MyVerticallyCenteredModal1
+                show={modalShow1}
+                onHide={() => setModalShow1(false)}
               />
             </> : <></>}
 
