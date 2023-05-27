@@ -13,6 +13,7 @@ export const listReducer = (state = initialstate, { type, payload }) => {
                 // console.log((payload.info.next));
                 // console.log((payload.info.next).length);
                 // console.log((payload.info.next).slice(47,));
+                //console.log(page);
                 return { ...state, lists: payload, page: (payload.info.next).slice(47,) };
             }
         case ActionTypes.FILTER:
@@ -42,6 +43,10 @@ export const listReducer = (state = initialstate, { type, payload }) => {
                 }
                 console.log(filtlist)
                 return { ...state ,filterlist:filtlist};
+            }
+        case ActionTypes.PAGE:
+            {
+                
             }
         default:
             return state;

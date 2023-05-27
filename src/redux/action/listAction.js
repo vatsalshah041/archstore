@@ -11,3 +11,9 @@ export const filter=(list)=>{
         payload:list,
     }
 };
+export const page=(list)=>{
+    return{
+        type:ActionTypes.FILTER,
+        payload:list,
+    }
+};

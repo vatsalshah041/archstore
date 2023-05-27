@@ -11,7 +11,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, IconButton } from '@mui/material';
 import Modal from 'react-bootstrap/Modal'
 import { useState } from 'react';
 import { TextField } from '@mui/material';
@@ -20,6 +20,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 
 
@@ -33,11 +36,12 @@ export default function Test() {
   let page = useSelector((state) => state.allLists.page);
   page = parseInt(page) - 1;
   page = String(page);
+  const [p,setP]=useState(page)
   //console.log(page);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const url = "https://rickandmortyapi.com/api/character?page=" + page
+    const url = "https://rickandmortyapi.com/api/character?page=" + p
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
@@ -58,7 +62,7 @@ export default function Test() {
 
     makeRequest();
 
-  }, [])
+  }, [p])
 
   function createData(id, name, status, gender) {
     return { id, name, status, gender };
@@ -160,6 +164,24 @@ export default function Test() {
       </Modal>
     );
   }
+  const next=()=>{
+    page = parseInt(page) +1;
+  page = String(page);
+  console.log(page)
+  setP(page)
+  }
+  const prev=()=>{
+   if(page=="1")
+   {
+
+   } 
+   else{
+    page = parseInt(page) -1;
+  page = String(page);
+  console.log(page)
+  setP(page)
+   }
+  }
 
   return (
     <>
@@ -171,7 +193,16 @@ export default function Test() {
             <Button variant='contained' onClick={() => setModalShow(true)}>Filters</Button>
           </div>
         </Grid>
-        <Grid item md={5}></Grid>
+        <Grid item md={4}></Grid>
+        <Grid item md={1}>
+        
+        </Grid>
+        <Grid item md={11}></Grid>
+        <Grid item md={1}>
+          <IconButton onClick={prev}><ArrowBackIosIcon/></IconButton>
+          <IconButton onClick={next}><ArrowForwardIosIcon/></IconButton>
+        
+        </Grid>
         <Grid item md={12} sx={{ padding: "10px" }}>
 
           <div>
@@ -184,7 +215,8 @@ export default function Test() {
                       <TableCell align="center" sx={{ backgroundColor: "#8c7deecc", borderTopLeftRadius: '23px' }}>ID</TableCell>
                       <TableCell align="center" sx={{ backgroundColor: "#8c7deecc" }}>Name</TableCell>
                       <TableCell align="center" sx={{ backgroundColor: "#8c7deecc" }}>Status</TableCell>
-                      <TableCell align="center" sx={{ backgroundColor: "#8c7deecc", borderTopRightRadius: '23px' }}>Gender</TableCell>
+                      <TableCell align="center" sx={{ backgroundColor: "#8c7deecc" }}>Gender</TableCell>
+                      <TableCell align="center" sx={{ backgroundColor: "#8c7deecc", borderTopRightRadius: '23px' }}>Details</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -199,6 +231,7 @@ export default function Test() {
                         <TableCell align="center">{row.name}</TableCell>
                         <TableCell align="center">{row.status}</TableCell>
                         <TableCell align="center">{row.gender}</TableCell>
+                        <TableCell align="center"><IconButton onClick={details}><AssignmentIcon/></IconButton></TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
